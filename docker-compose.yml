@@ -9,9 +9,5 @@ services:
     ports:
       - "5000:80"
       - "5001:443"
-    networks:
-      - local
-
-networks:
-  local:
-    driver: bridge
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"

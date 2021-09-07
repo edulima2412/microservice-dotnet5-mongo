@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,11 @@ namespace Catalog
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    //webBuilder.UseKestrel(options => options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps(
+                    //    adapterOptions =>
+                    //    {
+                    //        adapterOptions.ServerCertificate = new X509Certificate2("/https/aspnetapp.pfx", "password");
+                    //    })));
                 });
     }
 }
