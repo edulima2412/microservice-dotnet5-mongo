@@ -13,9 +13,9 @@ namespace Catalog.Api.Controllers
     [Route("api/items")]
     public class ItemsController : ControllerBase
     {
-        private readonly IInMemItemsRepository _repository;
+        private readonly IItemsRepository _repository;
 
-        public ItemsController(IInMemItemsRepository repository)
+        public ItemsController(IItemsRepository repository)
         {
             _repository = repository;
         }

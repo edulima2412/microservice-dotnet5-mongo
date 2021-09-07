@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Catalog.Api.Repositories
 {
-    public interface IInMemItemsRepository
+    public interface IItemsRepository
     {
         Item GetItem(Guid id);
         IEnumerable<Item> GetItems();
