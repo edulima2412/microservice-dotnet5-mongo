@@ -1,8 +1,17 @@
 version: '3.4'
 
 services:
-  catalog:
-    image: ${DOCKER_REGISTRY-}catalog
+  catalog-api:
+    container_name: catalog-api
     build:
       context: .
-      dockerfile: Catalog/Dockerfile
+      dockerfile: ./src/Catalog.Api/Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
