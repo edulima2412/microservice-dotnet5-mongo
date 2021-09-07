@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "9CxnpSA5HGoMCMb5SkrBqoEjBM8RDpvDbYGkB01f4KxX0tLfB5GVkJwTXRk9LoD3OI4byEDtsYGdUnaTY5rJIQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\carlos.rocha\\Documents\\Projetos\\microservice-dotnet5-mongo\\Catalog\\Catalog.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\carlos.rocha\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
