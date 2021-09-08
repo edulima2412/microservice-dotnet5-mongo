@@ -9,79 +9,79 @@ using System.Threading.Tasks;
 
 namespace Catalog.Api.Controllers
 {
-    [ApiController]
-    [Route("api/items")]
-    public class ItemsController : ControllerBase
+  [ApiController]
+  [Route("api/items")]
+  public class ItemsController : ControllerBase
+  {
+    private readonly IItemsRepository _repository;
+
+    public ItemsController(IItemsRepository repository)
     {
-        private readonly IItemsRepository _repository;
-
-        public ItemsController(IItemsRepository repository)
-        {
-            _repository = repository;
-        }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<ItemDto>> GetItems()
-        {
-            var items = _repository.GetItems().Select(item => item.AsDto());
-
-            return Ok(items);
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<ItemDto> GetItem(Guid id)
-        {
-            var item = _repository.GetItem(id);
-            if (item is null)
-                return NotFound();
-
-            return Ok(item.AsDto());
-        }
-
-        [HttpPost]
-        public ActionResult<ItemDto> CreateItem(CreateItemDto itemDto)
-        {
-            Item item = new()
-            {
-                Id = Guid.NewGuid(),
-                Name = itemDto.Name,
-                Price = itemDto.Price,
-                CreatedDate = DateTimeOffset.UtcNow
-            };
-
-            _repository.CreateItem(item);
-
-            return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto());
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<ItemDto> UpdateItem(Guid id, UpdateItemDto itemDto)
-        {
-            var existingItem = _repository.GetItem(id);
-            if (existingItem is null)
-                return NotFound();
-
-            Item updateItem = existingItem with
-            {
-                Name = itemDto.Name,
-                Price = itemDto.Price,
-            };
-
-            _repository.UpdateItem(updateItem);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult<ItemDto> DeleteItem(Guid id)
-        {
-            var existingItem = _repository.GetItem(id);
-            if (existingItem is null)
-                return NotFound();
-
-            _repository.DeleteItem(id);
-
-            return NoContent();
-        }
+      _repository = repository;
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ItemDto>>> GetItemsAsync()
+    {
+      var items = (await _repository.GetItemsAsync()).Select(item => item.AsDto());
+
+      return Ok(items);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ItemDto>> GetItemAsync(Guid id)
+    {
+      var item = await _repository.GetItemAsync(id);
+      if (item is null)
+        return NotFound();
+
+      return Ok(item.AsDto());
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ItemDto>> CreateItemAsync(CreateItemDto itemDto)
+    {
+      Item item = new()
+      {
+        Id = Guid.NewGuid(),
+        Name = itemDto.Name,
+        Price = itemDto.Price,
+        CreatedDate = DateTimeOffset.UtcNow
+      };
+
+      await _repository.CreateItemAsync(item);
+
+      return CreatedAtAction(nameof(GetItemAsync), new { id = item.Id }, item.AsDto());
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ItemDto>> UpdateItemAsync(Guid id, UpdateItemDto itemDto)
+    {
+      var existingItem = await _repository.GetItemAsync(id);
+      if (existingItem is null)
+        return NotFound();
+
+      Item updateItem = existingItem with
+      {
+        Name = itemDto.Name,
+        Price = itemDto.Price,
+      };
+
+      await _repository.UpdateItemAsync(updateItem);
+
+      return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<ItemDto>> DeleteItemAsync(Guid id)
+    {
+      var existingItem = await _repository.GetItemAsync(id);
+      if (existingItem is null)
+        return NotFound();
+
+      await _repository.DeleteItemAsync(id);
+
+      return NoContent();
+    }
+  }
 }

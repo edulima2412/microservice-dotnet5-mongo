@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Catalog.Api.Repositories;
 using Catalog.Api.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -31,24 +24,29 @@ namespace Catalog
 
     public void ConfigureServices(IServiceCollection services)
     {
-        // Serializar tipos de dados do mongo
-        BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
-        BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
-        
-        //Adicionar provider do mongo
-        services.AddSingleton<IMongoClient>(ServiceProvider => {
-            var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+      // Serializar tipos de dados do mongo
+      BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+      BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
 
-            return new MongoClient(settings.ConnectionString);
-        });
+      //Adicionar provider do mongo
+      services.AddSingleton<IMongoClient>(ServiceProvider =>
+      {
+        var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
 
-        services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
-      
-        services.AddControllers();
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog Api", Version = "v1" });
-        });
+        return new MongoClient(settings.ConnectionString);
+      });
+
+      services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
+
+      services.AddControllers(options =>
+      {
+        options.SuppressAsyncSuffixInActionNames = false;
+      });
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog Api", Version = "v1" });
+      });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
