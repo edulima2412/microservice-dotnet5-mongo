@@ -22,11 +22,6 @@ namespace Catalog
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.UseKestrel(options => options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps(
-                    //    adapterOptions =>
-                    //    {
-                    //        adapterOptions.ServerCertificate = new X509Certificate2("/https/aspnetapp.pfx", "password");
-                    //    })));
                 });
     }
 }
